@@ -8,7 +8,7 @@ public class TurnManager : MonoBehaviour {
 	List<GameObject> Team1;
 	List<GameObject> Team2;
 	List<GameObject> turnOrder = new List<GameObject>();
-	
+	private int currentUnit = -1;
 	
 	// Use this for initialization
 	
@@ -38,11 +38,16 @@ public class TurnManager : MonoBehaviour {
 		}
 	}
 	
+	voidNextTurn()
+	{
+		currentUnit++;
+		Unit = turnOrder(currentUnit % turnOrder.Count);
+		//Faire le truc avec le gameplayManager
+	}
+	
+	
 	// Update is called once per frame
 	void Update () {
-		foreach (var character in turnOrder)
-		{
-			//UnitSelected = character.GetComponent<Unit>();
-		}
+		
 	}
 }
