@@ -27,6 +27,11 @@ public class BoardGenerator : MonoBehaviour
 				
 				GameObject tile = Instantiate ( this.TilePrefab, new Vector3 ( i, height / 2, j ), Quaternion.identity );
 
+				Tile t = tile.AddComponent <Tile> ().GetComponent<Tile> ();
+
+				t.x = i;
+				t.y = j;
+				
 				tile.transform.parent = parent.transform;
 			}
 		}
