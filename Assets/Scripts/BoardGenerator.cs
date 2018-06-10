@@ -1,15 +1,19 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.WSA;
 
 public class BoardGenerator : MonoBehaviour
 {
-
 	public GameObject TilePrefab;
 
 	public int BoardWidth, BoardHeight;
-	
-	void Start ()
+
+	public static List <Tile> tiles;
+
+	private void Awake ()
 	{
+		tiles = new List <Tile> ();
+		
 		GenerateBoard ();
 	}
 
@@ -27,12 +31,17 @@ public class BoardGenerator : MonoBehaviour
 				
 				GameObject tile = Instantiate ( this.TilePrefab, new Vector3 ( i, height / 2, j ), Quaternion.identity );
 
+				tile.name = string.Format("Tile:({0}, {1})", i, j);
+				
 				Tile t = tile.AddComponent <Tile> ().GetComponent<Tile> ();
 
 				t.x = i;
 				t.y = j;
+				t.vertOffset = height / 2;
 				
 				tile.transform.parent = parent.transform;
+
+				tiles.Add ( t );
 			}
 		}
 
