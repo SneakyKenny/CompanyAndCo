@@ -22,7 +22,8 @@ public class Spawn_Control : MonoBehaviour
         {
             GameObject c = Instantiate(Player);
             c.name = name;
-            Unit chara = c.GetComponent<Unit>();           
+            Unit chara = c.GetComponent<Unit>();
+            chara.c = JSON.SearchJSON(T.data[i], "class").string_value;
             chara.hpMax = JSON.SearchJSON(T.data[i], "life").int_value;
             chara.currentHP = chara.hpMax;
             chara.attack = JSON.SearchJSON(T.data[i], "atk").int_value;
