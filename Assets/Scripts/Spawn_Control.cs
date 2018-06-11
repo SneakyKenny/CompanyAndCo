@@ -7,8 +7,8 @@ using JSONSTUFF;
 public class Spawn_Control : MonoBehaviour
 {
 
-    List<GameObject> Team1 = new List<GameObject>();
-    List<GameObject> Team2 = new List<GameObject>();
+    public List<GameObject> Team1 = new List<GameObject>();
+    public List<GameObject> Team2 = new List<GameObject>();
     public GameObject Player;
     public GameObject Tile;
 
