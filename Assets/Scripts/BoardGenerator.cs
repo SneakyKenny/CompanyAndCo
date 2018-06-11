@@ -30,6 +30,8 @@ public class BoardGenerator : MonoBehaviour
 				TilePrefab.transform.localScale = new Vector3 ( this.TilePrefab.transform.localScale.x, height, this.TilePrefab.transform.localScale.z );
 				
 				GameObject tile = Instantiate ( this.TilePrefab, new Vector3 ( i, height / 2, j ), Quaternion.identity );
+				
+				this.TilePrefab.transform.localScale = Vector3.one;
 
 				tile.name = string.Format("Tile:({0}, {1})", i, j);
 				
