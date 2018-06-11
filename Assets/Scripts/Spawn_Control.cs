@@ -29,6 +29,27 @@ public class Spawn_Control : MonoBehaviour
             chara.attackMental = JSON.SearchJSON(T.data[i], "matk").int_value;
             chara.defenseMental = JSON.SearchJSON(T.data[i], "mdef").int_value;
             chara.speed = JSON.SearchJSON(T.data[i], "spd").int_value;
+            chara.stun = 0;
+            chara.range = 0;
+            JSONElement Inv = JSON.SearchJSON(T.data[i], "Inventory");
+            if(Inv != null)
+            {
+                int j = 0;
+                foreach(string name in Inv.Key)
+                {
+                    if({"STICK", "COMPUTER", "CALC", "MONEY", "BROOM"}.contains(name))
+                    {
+                        chara.attack += 5 * JSON.SearchJSON(Inv.data[j], "lvl").int_value; 
+                        chara.attackMental += 5 * JSON.SearchJSON(Inv.data[j], "lvl").int_value; 
+                        j++;
+                    }
+                    if(name == "STAPLER")
+                    {
+                        chara.attack += 5 * JSON.SearchJSON(Inv.data[j], "lvl").int_value; 
+                        chara.range += JSON.SearchJSON(Inv.data[j], "lvl").int_value;
+                    }
+                }
+            }
             Team.Add(c);
             i++;
         }          
