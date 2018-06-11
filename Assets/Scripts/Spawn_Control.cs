@@ -1,5 +1,6 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using JSONSTUFF;
 
@@ -35,15 +36,16 @@ public class Spawn_Control : MonoBehaviour
             if(Inv != null)
             {
                 int j = 0;
-                foreach(string name in Inv.Key)
+                foreach(string iname in Inv.key)
                 {
-                    if({"STICK", "COMPUTER", "CALC", "MONEY", "BROOM"}.contains(name))
+                    string[] items = {"STICK", "COMPUTER", "CALC", "MONEY", "BROOM"};
+                    if(items.Contains(iname))
                     {
                         chara.attack += 5 * JSON.SearchJSON(Inv.data[j], "lvl").int_value; 
                         chara.attackMental += 5 * JSON.SearchJSON(Inv.data[j], "lvl").int_value; 
                         j++;
                     }
-                    if(name == "STAPLER")
+                    if(iname == "STAPLER")
                     {
                         chara.attack += 5 * JSON.SearchJSON(Inv.data[j], "lvl").int_value; 
                         chara.range += JSON.SearchJSON(Inv.data[j], "lvl").int_value;
