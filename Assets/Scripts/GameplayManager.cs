@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameplayManager : MonoBehaviour
 {
-	public Unit UnitSelected;
+	public static Unit UnitSelected;
 
 	private Tile SelectedTile;
 	private bool isLookingForDestinationTile = false;
@@ -39,7 +39,7 @@ public class GameplayManager : MonoBehaviour
 			continue;
 		}
 		
-		this.UnitSelected.MoveTo ( SelectedTile );
+		UnitSelected.MoveTo ( SelectedTile );
 
 		this.SelectedTile = null;
 	}

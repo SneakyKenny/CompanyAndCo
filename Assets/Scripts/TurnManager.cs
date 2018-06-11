@@ -38,10 +38,10 @@ public class TurnManager : MonoBehaviour {
 		}
 	}
 	
-	voidNextTurn()
+	void NextTurn()
 	{
 		currentUnit++;
-		Unit = turnOrder(currentUnit % turnOrder.Count);
+		GameplayManager.UnitSelected = turnOrder[currentUnit % turnOrder.Count].GetComponent<Unit> ();
 		//Faire le truc avec le gameplayManager
 	}
 	

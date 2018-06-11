@@ -14,7 +14,7 @@ public class Unit : MonoBehaviour
 
 	private void Start ()
 	{
-		
+		//TODO: set CurrentTile
 	}
 
 	public bool Attack ()
@@ -58,7 +58,7 @@ public class Unit : MonoBehaviour
 		{
 			this.CurrentTile.Unit = null;
 
-			this.transform.position = destinationTile.transform.position + new Vector3 ( 0, destinationTile.vertOffset, 0 );
+			this.transform.position = destinationTile.transform.position + new Vector3 ( 0, destinationTile.vertOffset / 2, 0 );
 
 			this.CurrentTile = destinationTile;
 

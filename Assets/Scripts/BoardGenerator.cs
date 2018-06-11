@@ -31,6 +31,7 @@ public class BoardGenerator : MonoBehaviour
 
 				t.x = i;
 				t.y = j;
+				t.vertOffset = height;
 				
 				tile.transform.parent = parent.transform;
 			}
