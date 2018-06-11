@@ -29,14 +29,27 @@ public class TurnManager : MonoBehaviour
 
 		foreach (var c in Team1)
 		{
-			if ( c != null )
-				this.turnOrder.Add ( c );
+			int i = 0;
+			int j = 0;
+			while (i < j && c.GetComponent<Unit>().speed < turnOrder[i].GetComponent<Unit>().speed)
+			{
+				i++;
+			}
+			if (j == 0)
+				turnOrder.Add(c);
+			else
+				turnOrder.Insert(i - 1,c);
 		}
 		
 		foreach (var c in Team2)
 		{
-			if ( c != null )
-				this.turnOrder.Add ( c );
+			int i = 0;
+			int j = turnOrder.Count;
+			while (i < j && c.GetComponent<Unit>().speed < turnOrder[i].GetComponent<Unit>().speed)
+			{
+				i++;
+			}
+			turnOrder.Insert(i, c);
 		}
 
 		CurrentlyusedUnit = this.turnOrder[0].GetComponent<Unit> ();
