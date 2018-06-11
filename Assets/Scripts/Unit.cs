@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
-	public int hpMax, currentHP, attack, attackMental, defense, defenseMental, speed;
+	public int hpMax, currentHP, attack, attackMental, defense, defenseMental, speed, stun;
+	
+	public Character.CharacterClass c;
+	public List<Items> Inventory;
+	
 	public List <Ability> abilities;
 	public Ability SpecialAbility;
-
+	
 	public Tile CurrentTile;
 
 	private void Start ()
