@@ -7,6 +7,8 @@ using JSONSTUFF;
 public class Spawn_Control : MonoBehaviour
 {
 
+    public static Spawn_Control Instance;
+    
     public List<GameObject> Team1 = new List<GameObject>();
     public List<GameObject> Team2 = new List<GameObject>();
     public GameObject Player;
@@ -63,14 +65,16 @@ public class Spawn_Control : MonoBehaviour
     }
 
     void Start()
-    {        
+    {
+        Instance = this;
+        
         BoardGenerator.SetSize ( 0, 0, 50, 50 );
         
         BoardGenerator.Instance.GenerateBoard ();
         
         ParseTeam(Team1, true);
         ParseTeam(Team2, false);
-
+        
         foreach (GameObject c in Team1)
         {
             if ( c != null )

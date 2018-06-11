@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using JetBrains.Annotations;
+using NUnit.Framework.Constraints;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,12 +21,10 @@ public class GameplayManager : MonoBehaviour
 
 	private int attackType = -1;
 
-	private void Start ()
+	void Awake ()
 	{
 		Instance = this;
 		
-		this.UnitSelected = FindObjectOfType <Unit> ();
-				
 		StartTurn ();
 	}
 
@@ -105,9 +104,8 @@ public class GameplayManager : MonoBehaviour
 	{
 		Debug.Log ( "Turn ended." );
 		
-		TurnManager.Instance.NextTurn ();
-		
 		StartTurn ();
+		TurnManager.Instance.NextTurn ();
 	}
 
 	public void StartTurn ()
@@ -123,17 +121,13 @@ public class GameplayManager : MonoBehaviour
 
 	Tile SelectTile ()
 	{
-		Debug.Log ( "Selecting a Tile" );
-		
-		Tile t = null;
-
 		Ray ray = Camera.main.ScreenPointToRay ( Input.mousePosition );
 
 		RaycastHit[] hits = Physics.RaycastAll ( ray );
 
 		foreach ( var hit in hits )
 		{
-			if ( hit.collider.gameObject.layer == LayerMask.NameToLayer ( "Tile" ) )
+			if ( hit.collider.gameObject.GetComponent <Tile> () != null )
 				return hit.collider.gameObject.GetComponent <Tile> ();
 		}
 

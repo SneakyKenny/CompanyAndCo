@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class TurnManager : MonoBehaviour
@@ -12,6 +13,8 @@ public class TurnManager : MonoBehaviour
 	List<GameObject> turnOrder = new List<GameObject>();
 	private int currentUnit = -1;
 
+	public static Unit CurrentlyusedUnit;
+
 	private void Awake ()
 	{
 		Instance = this;
@@ -19,34 +22,32 @@ public class TurnManager : MonoBehaviour
 
 	void Start ()
 	{
-		Team1 = GameObject.Find("GameObject").GetComponent<Spawn_Control>().Team1;
-		Team2 = GameObject.Find("GameObject").GetComponent<Spawn_Control>().Team2;		
+		Debug.Log ( "(✧෴✧)" );
+		
+		Team1 = Spawn_Control.Instance.Team1;
+		Team2 = Spawn_Control.Instance.Team2;
+
 		foreach (var c in Team1)
 		{
-			int i = 0;
-			while (i < turnOrder.Count)
-			{
-				if (c.GetComponent<Unit>().speed < turnOrder[i].GetComponent<Unit>().speed)
-					turnOrder.Insert(i, c);
-				i++;
-			}
+			if ( c != null )
+				this.turnOrder.Add ( c );
 		}
 		
 		foreach (var c in Team2)
 		{
-			int i = 0;
-			while (i < turnOrder.Count)
-			{
-				if (c.GetComponent<Unit>().speed < turnOrder[i].GetComponent<Unit>().speed)
-					turnOrder.Insert(i, c);
-				i++;
-			}
+			if ( c != null )
+				this.turnOrder.Add ( c );
 		}
+
+		CurrentlyusedUnit = this.turnOrder[0].GetComponent<Unit> ();
+		
+		NextTurn ();
 	}
-	
+
 	public void NextTurn()
 	{
 		currentUnit++;
+		
 		GameplayManager.Instance.UnitSelected = turnOrder[currentUnit % turnOrder.Count].GetComponent<Unit> ();
 	}
 }

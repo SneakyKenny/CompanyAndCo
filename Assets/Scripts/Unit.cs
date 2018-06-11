@@ -57,8 +57,6 @@ public class Unit : MonoBehaviour
 		if ( destinationTile == null )
 			return false;
 		
-		Debug.Log ( "Trying to move " + this.gameObject.name );
-		
 		try
 		{
 			if ( this.CurrentTile != null )
@@ -69,8 +67,6 @@ public class Unit : MonoBehaviour
 			this.CurrentTile = destinationTile;
 
 			this.CurrentTile.Unit = this;
-
-			Debug.Log ( "Done moving " + this.gameObject.name );
 
 			return true;
 		} catch ( Exception )
