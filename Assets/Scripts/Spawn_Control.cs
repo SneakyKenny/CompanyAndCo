@@ -10,7 +10,6 @@ public class Spawn_Control : MonoBehaviour
     public List<GameObject> Team1 = new List<GameObject>();
     public List<GameObject> Team2 = new List<GameObject>();
     public GameObject Player;
-    public GameObject Tile;
 
     void ParseTeam(List<GameObject> Team, bool hero)
     {
@@ -18,10 +17,15 @@ public class Spawn_Control : MonoBehaviour
         int i = 0;
         if (T.key == null)
             throw new System.Exception("HELL NAH BRO");
+        
+        GameObject unitsContainer = new GameObject();
+        unitsContainer.name = hero ? "Heroes" : "Foes";
+        
         foreach (string name in T.key)
         {
             GameObject c = Instantiate(Player);
             c.name = name;
+            c.transform.parent = unitsContainer.transform;
             Unit chara = c.GetComponent<Unit>();
             chara.c = JSON.SearchJSON(T.data[i], "class").string_value;
             chara.hpMax = JSON.SearchJSON(T.data[i], "life").int_value;
@@ -58,33 +62,31 @@ public class Spawn_Control : MonoBehaviour
         }          
     }
 
-
-    // Use this for initialization
     void Start()
     {        
-        for(int i = -25; i < 25; i++)
-        {
-            for (int j = 1; j < 50; j++)
-            {
-                GameObject tile = Instantiate(Tile);
-                tile.transform.position = new Vector3(i, 0, j);
-            }
-        }
+        BoardGenerator.SetSize ( 0, 0, 50, 50 );
+        
+        BoardGenerator.Instance.GenerateBoard ();
+        
         ParseTeam(Team1, true);
         ParseTeam(Team2, false);
+
         foreach (GameObject c in Team1)
         {
-            c.transform.position = new Vector3(Random.Range(-25, 24), 1.5f, Random.Range(1, 50));
+            if ( c != null )
+            {
+                c.GetComponent <Unit> ().MoveTo ( BoardGenerator.tiles [Random.Range ( 0, BoardGenerator.tiles.Count )] );
+            }
+            //c.transform.position = new Vector3 ( Random.Range ( 0, 50 ), 1.5f, 1 );
         }
+        
         foreach (GameObject c in Team2)
         {
-            c.transform.position = new Vector3(Random.Range(-25, 24), 1.5f, Random.Range(1, 50));
+            if ( c != null )
+            {
+                c.GetComponent <Unit> ().MoveTo ( BoardGenerator.tiles [Random.Range ( 0, BoardGenerator.tiles.Count )] );
+            }
+            //c.transform.position = new Vector3(Random.Range ( 0, 50), 1.5f, 50);
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }

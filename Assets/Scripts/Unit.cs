@@ -14,55 +14,63 @@ public class Unit : MonoBehaviour
 
 	private void Start ()
 	{
-		//TODO: set CurrentTile
+		MoveTo ( this.CurrentTile );
 	}
 
-	public bool Attack ()
+	public int Attack ()
 	{
 		Debug.Log ( "Attack." );
 
-		return true;
+		return 1;
 	}
 
-	public bool UseFirstAbility ()
+	public int UseFirstAbility ()
 	{
 		Debug.Log ( "UseFirstAbility." );
 
-		return true;
+		return 1;
 	}
 
-	public bool UseSecondAbility ()
+	public int UseSecondAbility ()
 	{
 		Debug.Log ( "UseSecondAbility." );
 
-		return true;
+		return 1;
 	}
 
-	public bool UseThirdAbility ()
+	public int UseThirdAbility ()
 	{
 		Debug.Log ( "UseThirdAbility." );
 
-		return true;
+		return 1;
 	}
 
-	public bool UseSpecialAbility ()
+	public int UseSpecialAbility ()
 	{
 		Debug.Log ( "UseSpecialAbility." );
 
-		return true;
+		return 1;
 	}
 	
 	public bool MoveTo ( Tile destinationTile )
 	{
+		if ( destinationTile == null )
+			return false;
+		
+		Debug.Log ( "Trying to move " + this.gameObject.name );
+		
 		try
 		{
-			this.CurrentTile.Unit = null;
+			if ( this.CurrentTile != null )
+				this.CurrentTile.Unit = null;
 
 			this.transform.position = destinationTile.transform.position + new Vector3 ( 0, destinationTile.vertOffset / 2, 0 );
 
 			this.CurrentTile = destinationTile;
 
 			this.CurrentTile.Unit = this;
+
+			Debug.Log ( "Done moving " + this.gameObject.name );
 
 			return true;
 		} catch ( Exception )
