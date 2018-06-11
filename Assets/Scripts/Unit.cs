@@ -5,7 +5,10 @@ using UnityEngine;
 public class Unit : MonoBehaviour
 {
 
-	public int hpMax, currentHP, attack, attackMental,defenseMental, defense, speed;
+	public int hpMax, currentHP, attack, attackMental,defenseMental, defense, speed, stun;
+	public string class;
+	public int range;
+	
 	public List <Ability> abilities;
 	public Ability SpecialAbility;
 
