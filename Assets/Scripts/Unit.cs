@@ -71,6 +71,9 @@ public class Unit : MonoBehaviour
 		if ( destinationTile == null )
 			return false;
 
+		if ( destinationTile == this.CurrentTile )
+			return false;
+
 		try
 		{
 			if ( this.CurrentTile != null )
@@ -81,8 +84,11 @@ public class Unit : MonoBehaviour
 				int dx = destinationTile.x - ( this.CurrentTile == null ? 0 : this.CurrentTile.x );
 				int dy = destinationTile.y - ( this.CurrentTile == null ? 0 : this.CurrentTile.y );
 
-				if ( Math.Abs(dx + dy) > this.range ) //the tile is too far away
-					return false;
+				int tileIndex = BoardGenerator.CoordToIndex ( this.CurrentTile.x + dx, this.CurrentTile.y + dy );
+
+				if(tileIndex >= 0 && tileIndex < BoardGenerator.tiles.Count)
+					if ( BoardGenerator.tiles [tileIndex].GetComponent <Renderer> ().material.color != Color.cyan )
+						return false;
 			}
 
 			if ( isGameInit )
@@ -103,14 +109,15 @@ public class Unit : MonoBehaviour
 
 	public void ShowTilesInMovementRange ()
 	{
-		for ( int i = -this.range / 2 - 1; i <= this.range / 2 + 1; i++ )
+		for ( int i = -this.range; i <= this.range ; i++ )
 		{
-			for ( int j = -this.range / 2 - 1; j <= this.range / 2 + 1; j++ )
+			for ( int j = -this.range; j <= this.range; j++ )
 			{
-				if ( Mathf.Abs(i + j) <= this.range )
+				if ( Mathf.Abs ( i ) + Mathf.Abs ( j ) <= range )
 				{
 					int tileIndex = BoardGenerator.CoordToIndex ( this.CurrentTile.x + i, this.CurrentTile.y + j );
-					BoardGenerator.tiles [tileIndex].gameObject.GetComponent<Renderer> ().material.color = Color.cyan;
+					if ( tileIndex >= 0 && tileIndex < BoardGenerator.tiles.Count )
+						BoardGenerator.tiles [tileIndex].gameObject.GetComponent <Renderer> ().material.color = Color.cyan;
 				}
 			}
 		}

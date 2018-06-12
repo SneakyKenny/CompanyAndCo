@@ -13,7 +13,7 @@ public class Tile : MonoBehaviour
 
 	public override string ToString ()
 	{
-		return string.Format ( "Tile({0},{1}); h = {2}", this.x, this.y, this.vertOffset );
+		return string.Format ( "Tile({0},{1})", this.x, this.y );
 	}
 
 }
