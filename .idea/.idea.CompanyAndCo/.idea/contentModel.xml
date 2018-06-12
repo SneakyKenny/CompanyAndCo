@@ -19,6 +19,11 @@
           <e p="BoardGenerator.cs" t="Include" />
           <e p="GameplayManager.cs" t="Include" />
           <e p="JSON.cs" t="Include" />
+          <e p="Multiplayer" t="Include">
+            <e p="Client.cs" t="Include" />
+            <e p="MultiplayerMenuManager.cs" t="Include" />
+            <e p="Server.cs" t="Include" />
+          </e>
           <e p="Spawn_Control.cs" t="Include" />
           <e p="Tile.cs" t="Include" />
           <e p="TurnManager.cs" t="Include" />

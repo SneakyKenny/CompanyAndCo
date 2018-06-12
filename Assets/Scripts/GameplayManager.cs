@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
-using JetBrains.Annotations;
-using NUnit.Framework.Constraints;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,10 +19,21 @@ public class GameplayManager : MonoBehaviour
 	public Button MoveButton, AttackButton;
 
 	private int attackType = -1;
+	int attackId = -1;
+
+	private Tile AttackedTile;
+	
+	string CACTION = String.Empty;
+
+	private Client client;
 
 	void Awake ()
 	{
 		Instance = this;
+
+
+		client = FindObjectOfType <Client> ();
+		
 		
 		StartTurn ();
 	}
@@ -50,28 +60,29 @@ public class GameplayManager : MonoBehaviour
 
 				if ( this.SelectedTile != null )
 				{
-					int attackId = -1;
 					switch ( this.attackType )
 					{
+						// reminder : attackId takes values 0 >= 2: 0: attack failed, 1: attack succeeded, 2: attack was not on a valid target (empty tile for example)
 						case -1:
 							return;
 						case 0:
-							attackId = this.UnitSelected.Attack ();
+							attackId = this.UnitSelected.Attack (SelectedTile);
 							break;
 						case 1:
-							attackId = this.UnitSelected.UseFirstAbility ();
+							attackId = this.UnitSelected.UseFirstAbility (SelectedTile);
 							break;
 						case 2:
-							attackId = this.UnitSelected.UseSecondAbility ();
+							attackId = this.UnitSelected.UseSecondAbility (SelectedTile);
 							break;
 						case 3:
-							attackId = this.UnitSelected.UseThirdAbility ();
+							attackId = this.UnitSelected.UseThirdAbility (SelectedTile);
 							break;
 						case 4:
-							attackId = this.UnitSelected.UseSpecialAbility ();
+							attackId = this.UnitSelected.UseSpecialAbility (SelectedTile);
 							break;
 						case 5:
 							// TODO: Objects
+							this.attackId = 0;
 							break;
 					}
 
@@ -80,11 +91,13 @@ public class GameplayManager : MonoBehaviour
 						case 0:
 							Debug.Log ( "Unit failed to attack." );
 							UnitCanAttack = false;
+							AttackedTile = this.SelectedTile;
 							OnUnitDoneAttacking ();
 							break;
 						case 1:
 							Debug.Log ( "Unit succesfully attacked." );
 							UnitCanAttack = false;
+							AttackedTile = this.SelectedTile;
 							OnUnitDoneAttacking ();
 							break;
 						case 2:
@@ -106,15 +119,61 @@ public class GameplayManager : MonoBehaviour
 	public void EndTurn ()
 	{
 		Debug.Log ( "Turn ended." );
+
+		CACTION += this.UnitSelected.CurrentTile.x + "|" + this.UnitSelected.CurrentTile.y + "|";
+
+		if ( this.UnitCanAttack )
+			CACTION += "NOTHING|0|0|0|0";
+		else
+		{
+			switch ( this.attackType )
+			{
+				case 0:
+					CACTION += "atk|" + this.AttackedTile.x + "|" + this.AttackedTile.y + "|" + this.attackId;
+					break;
+				case 1:
+					CACTION += "atkspeone|" + this.AttackedTile.x + "|" + this.AttackedTile.y + "|" + this.attackId;
+					break;
+				case 2:
+					CACTION += "atkspetwo|" + this.AttackedTile.x + "|" + this.AttackedTile.y + "|" + this.attackId;
+					break;
+				case 3:
+					CACTION += "atkspethree|" + this.AttackedTile.x + "|" + this.AttackedTile.y + "|" + this.attackId;
+					break;
+				case 4:
+					CACTION += "compspe|" + this.AttackedTile.x + "|" + this.AttackedTile.y + "|" + this.attackId;
+					break;
+				case 5:
+					CACTION += "obj|" + this.AttackedTile.x + "|" + this.AttackedTile.y + "|" + this.attackId;
+					break;
+			}
+		}
+		
+		client.Send ( this.CACTION );
+		
+		TurnManager.Instance.NextTurn ();
 		
 		StartTurn ();
-		TurnManager.Instance.NextTurn ();
 	}
 
+	private IEnumerator WaitforThingNotToBeNull ()
+	{
+		yield return new WaitForSeconds ( 1 );
+
+		CACTION = "CACTION|" + this.UnitSelected.CurrentTile.x + "|" + this.UnitSelected.CurrentTile.y + "|";
+	}
+	
 	public void StartTurn ()
 	{
+		if ( UnitSelected == null )
+			StartCoroutine ( WaitforThingNotToBeNull () );
+		else
+			CACTION = "CACTION|" + this.UnitSelected.CurrentTile.x + "|" + this.UnitSelected.CurrentTile.y + "|";
+		
 		ShowWhatToDoMenu ();
 
+		AttackedTile = null;
+		
 		ResetBoardTilesColor ();
 
 		this.UnitCanMove = true;
