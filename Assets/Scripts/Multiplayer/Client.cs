@@ -100,6 +100,10 @@ public class Client : MonoBehaviour
 		
 		Unit unit = BoardGenerator.GetUnitAtCoord ( x1, y1 );
 		Tile destinationTile = BoardGenerator.tiles [BoardGenerator.CoordToIndex ( x2, y2 )];
+
+		if ( unit == null )
+			unit = GameplayManager.Instance.UnitSelected;
+		
 		bool didMove = unit.MoveTo ( destinationTile );
 
 		Tile attackedTile = BoardGenerator.tiles [BoardGenerator.CoordToIndex ( x3, y3 )];
@@ -115,10 +119,10 @@ public class Client : MonoBehaviour
 				attackSucceeded = unit.UseFirstAbility ( attackedTile );
 				break;
 			case "atkspetwo":
-				attackSucceeded = unit.UseSecondAbility ( attackedTile );
+				attackSucceeded = unit.UseSecondAbility ();
 				break;
 			case "atkspethree":
-				attackSucceeded = unit.UseThirdAbility ( attackedTile );
+				attackSucceeded = unit.UseThirdAbility ();
 				break;
 			case "compspe":
 				attackSucceeded = unit.UseSpecialAbility ( attackedTile );
@@ -130,11 +134,7 @@ public class Client : MonoBehaviour
 				break;
 		}
 		
-		Debug.Log ( unit );
-		Debug.Log ( destinationTile );
-		Debug.Log ( didMove );
-		Debug.Log ( attackedTile );
-		Debug.Log ( attackSucceeded );
+		TurnManager.Instance.NextTurn ();
 		
 	}
 

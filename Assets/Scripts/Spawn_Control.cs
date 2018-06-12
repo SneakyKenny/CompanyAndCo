@@ -115,20 +115,22 @@ public class Spawn_Control : MonoBehaviour
         ParseTeam(Team1,true);
         ParseTeam(Team2,false);
 
-        foreach (Unit c in Team1)
+        for(int i = 0; i < this.Team1.Count; i++)
         {
+            Unit c = Team1 [i];
             if (c != null)
             {
-                c.MoveTo(BoardGenerator.tiles[Random.Range(0, BoardGenerator.tiles.Count)], true);
+                c.MoveTo(BoardGenerator.tiles[BoardGenerator.CoordToIndex(0, i * 6)], true);
                 //c.GetComponentInParent<MeshRenderer>().material.color = Color.blue;
             }
         }
 
-        foreach (Unit c in Team2)
+        for(int i = 0; i < this.Team2.Count; i++)
         {
+            Unit c = Team2 [i];
             if (c != null)
             {
-                c.MoveTo(BoardGenerator.tiles[Random.Range(0, BoardGenerator.tiles.Count)], true);
+                c.MoveTo(BoardGenerator.tiles[BoardGenerator.CoordToIndex(49, i * 6)], true);
                // c.GetComponent<MeshRenderer>().material.color = Color.red;
             }
         }

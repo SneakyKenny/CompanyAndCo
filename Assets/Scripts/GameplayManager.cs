@@ -249,7 +249,9 @@ public class GameplayManager : MonoBehaviour
 		if ( this.UnitCanAttack )
 		{
 			this.isLookingForAttackTile = true;
-
+			
+			this.UnitSelected.ShowAttackRange ( true );
+			
 			this.attackType = 0;
 		}
 	}
@@ -265,6 +267,8 @@ public class GameplayManager : MonoBehaviour
 		{
 			this.isLookingForAttackTile = true;
 
+			this.UnitSelected.ShowAttackRange ( false );
+			
 			this.attackType = 1;
 		}
 	}
@@ -274,7 +278,9 @@ public class GameplayManager : MonoBehaviour
 		if ( this.UnitCanAttack )
 		{
 			this.isLookingForAttackTile = true;
-
+			
+			this.UnitSelected.ShowAttackRange ( false );
+			
 			this.attackType = 2;
 		}
 	}
@@ -285,6 +291,8 @@ public class GameplayManager : MonoBehaviour
 		{
 			this.isLookingForAttackTile = true;
 
+			this.UnitSelected.ShowAttackRange ( false );
+
 			this.attackType = 3;
 		}
 	}
@@ -294,6 +302,8 @@ public class GameplayManager : MonoBehaviour
 		if ( this.UnitCanAttack )
 		{
 			this.isLookingForAttackTile = true;
+
+			this.UnitSelected.ShowAbilityRange ();
 
 			this.attackType = 4;
 		}

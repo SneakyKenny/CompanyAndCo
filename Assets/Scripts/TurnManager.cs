@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TurnManager : MonoBehaviour
 {
@@ -42,7 +43,7 @@ public class TurnManager : MonoBehaviour
 				if (j == 0)
 					turnOrder.Add(c);
 				else
-					turnOrder.Insert(i - 1,c);			
+					turnOrder.Insert(i - 1,c);
 			}
 		}		
 		foreach (var c in Team2)
@@ -63,7 +64,7 @@ public class TurnManager : MonoBehaviour
 	}
 
 	
-	public void NextTurn(string message = "")
+	public void NextTurn()
 	{
 		if (Team1.Count > 0 && Team2.Count > 0)
 		{
@@ -72,10 +73,12 @@ public class TurnManager : MonoBehaviour
 				u.stun--;
 			}
 			currentUnit++;
-			if (Team1.Contains(turnOrder[currentUnit % turnOrder.Count]) && turnOrder[currentUnit % turnOrder.Count].stun <= 0)
-				GameplayManager.Instance.UnitSelected = turnOrder[currentUnit % turnOrder.Count];
-			else NextTurn();
+
+			GameplayManager.Instance.UnitSelected = turnOrder[currentUnit % turnOrder.Count];
+		} else
+		{
+			//else finish game
+			SceneManager.LoadScene ( "GameOver" );
 		}
-		//else finish game
 	}
 }

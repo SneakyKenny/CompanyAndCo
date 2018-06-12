@@ -1,9 +1,5 @@
-﻿using System.CodeDom.Compiler;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using UnityEngine;
-using UnityEngine.VR.WSA.Input;
 
 public class PDG_Effect : AbilityEffect {
 

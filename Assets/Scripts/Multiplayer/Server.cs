@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿﻿﻿using System;
 using System.Net.Sockets;
 using UnityEngine;
 using System.Collections.Generic;
@@ -162,22 +162,13 @@ public class Server : MonoBehaviour
 		Broadcast ( "SWHO|" + allUsers, this.clients [this.clients.Count - 1] );
 		
 		// this should give us the ip of the person that just connected.
-		Debug.Log ( "Connected! ip : " + ( ( IPEndPoint ) sc.tcp.Client.RemoteEndPoint ).Address );
+		//Debug.Log ( "Connected! ip : " + ( ( IPEndPoint ) sc.tcp.Client.RemoteEndPoint ).Address );
 
 		if ( this.clients.Count == 2 )
-		{
-			foreach ( var c in this.clients )
-			{
-				Debug.Log ( c.ClientName );
-			}
-			
 			Broadcast ( "SSTART", this.clients );
-		} else
-		{
+		else
 			StartListening ();
-		}
 	}
-
 }
 
 public class ServerClient

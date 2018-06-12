@@ -112,6 +112,9 @@ public class Unit : MonoBehaviour
 		if ( destinationTile == this.CurrentTile )
 			return false;
 
+		if ( destinationTile.Unit != null )
+			return false;
+
 		try
 		{
 			if ( this.CurrentTile != null )
@@ -124,19 +127,23 @@ public class Unit : MonoBehaviour
 
 				int tileIndex = BoardGenerator.CoordToIndex ( this.CurrentTile.x + dx, this.CurrentTile.y + dy );
 
-				if(tileIndex >= 0 && tileIndex < BoardGenerator.tiles.Count)
+				if ( tileIndex >= 0 && tileIndex < BoardGenerator.tiles.Count )
+				{
+					if ( Mathf.Abs ( dx ) + Mathf.Abs ( dy ) <= this.range )
+						this.destinationPosition = destinationTile.transform.position + new Vector3 ( 0, destinationTile.vertOffset / 2, 0 );
+					else
 					if ( BoardGenerator.tiles [tileIndex].GetComponent <Renderer> ().material.color != Color.cyan )
 						return false;
+				}
 			}
-
-			if ( isGameInit )
-				transform.position = destinationTile.transform.position + new Vector3 ( 0, destinationTile.vertOffset / 2, 0 );
 			else
-				this.destinationPosition = destinationTile.transform.position + new Vector3 ( 0, destinationTile.vertOffset / 2, 0 );
+				transform.position = destinationTile.transform.position + new Vector3 ( 0, destinationTile.vertOffset / 2, 0 );
 
 			this.CurrentTile = destinationTile;
 
 			this.CurrentTile.Unit = this;
+
+			GameplayManager.ResetBoardTilesColor ();
 			
 			return true;
 		} catch ( Exception )

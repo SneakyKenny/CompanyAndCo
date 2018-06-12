@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -77,15 +77,18 @@ LightmapSettings:
     m_PVRDirectSampleCount: 32
     m_PVRSampleCount: 500
     m_PVRBounces: 2
-    m_PVRFiltering: 0
+    m_PVRFilterTypeDirect: 0
+    m_PVRFilterTypeIndirect: 0
+    m_PVRFilterTypeAO: 0
     m_PVRFilteringMode: 1
     m_PVRCulling: 1
     m_PVRFilteringGaussRadiusDirect: 1
     m_PVRFilteringGaussRadiusIndirect: 5
     m_PVRFilteringGaussRadiusAO: 2
-    m_PVRFilteringAtrousColorSigma: 1
-    m_PVRFilteringAtrousNormalSigma: 1
-    m_PVRFilteringAtrousPositionSigma: 1
+    m_PVRFilteringAtrousPositionSigmaDirect: 0.5
+    m_PVRFilteringAtrousPositionSigmaIndirect: 2
+    m_PVRFilteringAtrousPositionSigmaAO: 1
+    m_ShowResolutionOverlay: 1
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -107,6 +110,8 @@ NavMeshSettings:
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
+    debug:
+      m_Flags: 0
   m_NavMeshData: {fileID: 0}
 --- !u!1 &81494929
 GameObject:
@@ -182,6 +187,52 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 81494929}
+--- !u!1 &122236995
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 122236997}
+  - component: {fileID: 122236996}
+  m_Layer: 0
+  m_Name: GameplayManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &122236996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 122236995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9b2789440263344a859eaef94d8f626, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UnitSelected: {fileID: 0}
+  WhatToDoCanvas: {fileID: 1505364728}
+  ActionCanvas: {fileID: 1193460369}
+  SpecialAttackCanvas: {fileID: 1617176770}
+  MoveButton: {fileID: 2120943544}
+  AttackButton: {fileID: 1313784334}
+--- !u!4 &122236997
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 122236995}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &256897483
 GameObject:
   m_ObjectHideFlags: 0
@@ -397,7 +448,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1757252094}
+      - m_Target: {fileID: 122236996}
         m_MethodName: SPECIALATTACKONEBUTTON
         m_Mode: 1
         m_Arguments:
@@ -740,7 +791,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1757252094}
+      - m_Target: {fileID: 122236996}
         m_MethodName: ATTACKBUTTON
         m_Mode: 1
         m_Arguments:
@@ -936,7 +987,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1757252094}
+      - m_Target: {fileID: 122236996}
         m_MethodName: SPECIALABILITYBUTTON
         m_Mode: 1
         m_Arguments:
@@ -1024,7 +1075,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &859877737
 GameObject:
@@ -1069,7 +1120,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1003981926
 GameObject:
@@ -1147,7 +1198,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1757252094}
+      - m_Target: {fileID: 122236996}
         m_MethodName: SPECIALATTACKTHREEBUTTON
         m_Mode: 1
         m_Arguments:
@@ -1269,7 +1320,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1757252094}
+      - m_Target: {fileID: 122236996}
         m_MethodName: OBJECTBUTTON
         m_Mode: 1
         m_Arguments:
@@ -1631,7 +1682,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1757252094}
+      - m_Target: {fileID: 122236996}
         m_MethodName: SPECIALATTACKTWOBUTTON
         m_Mode: 1
         m_Arguments:
@@ -1753,7 +1804,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1757252094}
+      - m_Target: {fileID: 122236996}
         m_MethodName: ACTIONBUTTON
         m_Mode: 1
         m_Arguments:
@@ -2285,11 +2336,11 @@ Camera:
   m_TargetEye: 3
   m_HDR: 1
   m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
-  m_StereoMirrorMode: 0
 --- !u!4 &1557384032
 Transform:
   m_ObjectHideFlags: 0
@@ -2607,12 +2658,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1639010249}
---- !u!114 &1757252094 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114006356435590730, guid: 576800aad241c964a8c14b0a83368db5,
-    type: 2}
-  m_PrefabInternal: {fileID: 1976931656}
-  m_Script: {fileID: 11500000, guid: a9b2789440263344a859eaef94d8f626, type: 3}
 --- !u!1 &1849649557
 GameObject:
   m_ObjectHideFlags: 0
@@ -2794,96 +2839,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1976931656
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4336082757072666, guid: 576800aad241c964a8c14b0a83368db5, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4336082757072666, guid: 576800aad241c964a8c14b0a83368db5, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4336082757072666, guid: 576800aad241c964a8c14b0a83368db5, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4336082757072666, guid: 576800aad241c964a8c14b0a83368db5, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4336082757072666, guid: 576800aad241c964a8c14b0a83368db5, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4336082757072666, guid: 576800aad241c964a8c14b0a83368db5, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4336082757072666, guid: 576800aad241c964a8c14b0a83368db5, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4336082757072666, guid: 576800aad241c964a8c14b0a83368db5, type: 2}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1771744093398230, guid: 576800aad241c964a8c14b0a83368db5, type: 2}
-      propertyPath: m_Name
-      value: GameplayManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 114006356435590730, guid: 576800aad241c964a8c14b0a83368db5,
-        type: 2}
-      propertyPath: WhatToDoCanvas
-      value: 
-      objectReference: {fileID: 1505364728}
-    - target: {fileID: 114006356435590730, guid: 576800aad241c964a8c14b0a83368db5,
-        type: 2}
-      propertyPath: ActionCanvas
-      value: 
-      objectReference: {fileID: 1193460369}
-    - target: {fileID: 114006356435590730, guid: 576800aad241c964a8c14b0a83368db5,
-        type: 2}
-      propertyPath: SpecialAttackCanvas
-      value: 
-      objectReference: {fileID: 1617176770}
-    - target: {fileID: 114006356435590730, guid: 576800aad241c964a8c14b0a83368db5,
-        type: 2}
-      propertyPath: MoveButton
-      value: 
-      objectReference: {fileID: 2120943544}
-    - target: {fileID: 114006356435590730, guid: 576800aad241c964a8c14b0a83368db5,
-        type: 2}
-      propertyPath: AttackButton
-      value: 
-      objectReference: {fileID: 1313784334}
-    - target: {fileID: 1771744093398230, guid: 576800aad241c964a8c14b0a83368db5, type: 2}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114006356435590730, guid: 576800aad241c964a8c14b0a83368db5,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114006356435590730, guid: 576800aad241c964a8c14b0a83368db5,
-        type: 2}
-      propertyPath: SpecialAttackButton
-      value: 
-      objectReference: {fileID: 838545177}
-    - target: {fileID: 114006356435590730, guid: 576800aad241c964a8c14b0a83368db5,
-        type: 2}
-      propertyPath: DisplayCanvas
-      value: 
-      objectReference: {fileID: 2106446611}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 576800aad241c964a8c14b0a83368db5, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &2076539634
 GameObject:
   m_ObjectHideFlags: 0
@@ -2960,7 +2915,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1757252094}
+      - m_Target: {fileID: 122236996}
         m_MethodName: PASSBUTTON
         m_Mode: 1
         m_Arguments:
@@ -3082,7 +3037,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1757252094}
+      - m_Target: {fileID: 122236996}
         m_MethodName: SPECIALATTACKBUTTON
         m_Mode: 1
         m_Arguments:
@@ -3278,7 +3233,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1757252094}
+      - m_Target: {fileID: 122236996}
         m_MethodName: MOVEBUTTON
         m_Mode: 1
         m_Arguments:

@@ -13,7 +13,7 @@ public class MAN_Effect : AbilityEffect {
     public override void ApplyEffect(Tile tile)
     {
         
-        for ( int i = -3; i <= 3 ; i++ )
+        for ( int i = -3; i <= 3; i++ )
         {
             for ( int j = -3; j <= 3; j++ )
             {
