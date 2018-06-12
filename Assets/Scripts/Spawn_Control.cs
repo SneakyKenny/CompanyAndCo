@@ -67,9 +67,10 @@ public class Spawn_Control : MonoBehaviour
                     }
                 }
             }
-            chara.abilities.Add(new Ability(Ability.AbilityType.PHYS, "Regular strike", 1, chara.range, chara.attack));
+
+            chara.AddAbility ( new Ability ( Ability.AbilityType.PHYS, "Regular strike", 1, chara.range, chara.attack ) );
             //chara.abilities.Add(new Ability((Ability.AbilityType.PHYS, "Poweful strike", 3, chara.attack / 3)));
-            chara.abilities.Add(new Ability(Ability.AbilityType.MEN, "Regular insult", 1, 1, chara.attackMental));
+            chara.AddAbility ( new Ability ( Ability.AbilityType.MEN, "Regular insult", 1, 1, chara.attackMental ) );
             //chara.abilities.Add(new Ability((Ability.AbilityType.PHYS, "Poweful strike", 3, chara.attack / 3)));
             switch (chara.c)
             {
@@ -110,22 +111,20 @@ public class Spawn_Control : MonoBehaviour
         ParseTeam(Team1,true);
         ParseTeam(Team2,false);
 
-        foreach (GameObject c in Team1)
+        foreach (Unit c in Team1)
         {
             if (c != null)
             {
-                c.GetComponent<Unit>().MoveTo(BoardGenerator.tiles[Random.Range(0, BoardGenerator.tiles.Count)]);
+                c.GetComponent<Unit>().MoveTo(BoardGenerator.tiles[Random.Range(0, BoardGenerator.tiles.Count)], true);
             }
-            //c.transform.position = new Vector3 ( Random.Range ( 0, 50 ), 1.5f, 1 );
         }
 
-        foreach (GameObject c in Team2)
+        foreach (Unit c in Team2)
         {
             if (c != null)
             {
-                c.GetComponent<Unit>().MoveTo(BoardGenerator.tiles[Random.Range(0, BoardGenerator.tiles.Count)]);
+                c.GetComponent<Unit>().MoveTo(BoardGenerator.tiles[Random.Range(0, BoardGenerator.tiles.Count)], true);
             }
-            //c.transform.position = new Vector3(Random.Range ( 0, 50), 1.5f, 50);
         }
     }
 

@@ -17,6 +17,11 @@ public class TurnManager : MonoBehaviour
 		Instance = this;
 	}
 
+	void Start ()
+	{
+		StartGame ();
+	}
+	
 	public void StartGame()
 	{
 		Team1 = Spawn_Control.Instance.Team1;
@@ -56,34 +61,8 @@ public class TurnManager : MonoBehaviour
 		NextTurn();
 	}
 	
-	
-	void Start ()
-	{		
-		
-	}
-
-	/*public void SendAction(string message)
+	public void NextTurn()
 	{
-		if (currentUnit > 0)
-		{
-			bool wasturn = Team1.Contains(turnOrder[currentUnit % turnOrder.Count]);
-			if (wasturn)
-				Client.Instance.Send("Turn Finished");
-			if(GameObject.Find("NetworkManager").GetComponent<NetworkManager>().isServer)
-				Server.Instance.Transfer();
-			if(!wasturn)
-			{
-				string newpos = Client.Instance.Receive();
-				turnOrder[currentUnit % turnOrder.Count].transform.position = new Vector3(10 * newpos[0] + newpos[1], 1 , 10 * newpos[3] + newpos[4]);
-			}
-			
-		}
-	}*/
-	
-	public void NextTurn(string message = "")
-	{
-		/*if(message != "")
-			SendAction(message);*/
 		currentUnit++;
 		if (Team1.Contains(turnOrder[currentUnit % turnOrder.Count]))
 			GameplayManager.Instance.UnitSelected = turnOrder[currentUnit % turnOrder.Count];
