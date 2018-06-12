@@ -16,9 +16,9 @@ public class TurnManager : MonoBehaviour
 	{
 		Instance = this;
 	}
-
-	public void StartGame()
-	{
+	
+	void Start ()
+	{		
 		Team1 = Spawn_Control.Instance.Team1;
 		Team2 = Spawn_Control.Instance.Team2;
 		turnOrder = new List<Unit>();
@@ -54,12 +54,6 @@ public class TurnManager : MonoBehaviour
 			}
 		}
 		NextTurn();
-	}
-	
-	
-	void Start ()
-	{		
-		
 	}
 
 	/*public void SendAction(string message)
