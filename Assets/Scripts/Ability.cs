@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class Ability
@@ -12,8 +13,8 @@ public class Ability
     };
 	public string AbilityName;
 	public int AbilityBaseDamage;
-    //public AbilityEffet effect;
-    private int Area, range;
+    public AbilityEffect effect;
+    public int Area, range;
     private AbilityType type;
 
     public Ability(AbilityType t, string AbilityName, int Area, int range, int BaseDamage = 10)
@@ -29,5 +30,15 @@ public class Ability
         AbilityBaseDamage = BaseDamage;
         if (t == AbilityType.MEN)
             range += 3;
+    }
+
+    public Ability(AbilityEffect effect)
+    {
+        type = AbilityType.SPE;
+        this.range = 5;
+        this.AbilityName = "Special ability";
+        this.effect = effect;
+        if (effect is PDG_Effect)
+            range = 0;
     }
 }

@@ -17,6 +17,7 @@ public class TurnManager : MonoBehaviour
 		Instance = this;
 	}
 
+
 	void Start ()
 	{
 		StartGame ();
@@ -60,12 +61,21 @@ public class TurnManager : MonoBehaviour
 		}
 		NextTurn();
 	}
+
 	
-	public void NextTurn()
+	public void NextTurn(string message = "")
 	{
-		currentUnit++;
-		if (Team1.Contains(turnOrder[currentUnit % turnOrder.Count]))
-			GameplayManager.Instance.UnitSelected = turnOrder[currentUnit % turnOrder.Count];
-		else NextTurn();
+		if (Team1.Count > 0 && Team2.Count > 0)
+		{
+			foreach (var u in turnOrder)
+			{
+				u.stun--;
+			}
+			currentUnit++;
+			if (Team1.Contains(turnOrder[currentUnit % turnOrder.Count]) && turnOrder[currentUnit % turnOrder.Count].stun <= 0)
+				GameplayManager.Instance.UnitSelected = turnOrder[currentUnit % turnOrder.Count];
+			else NextTurn();
+		}
+		//else finish game
 	}
 }

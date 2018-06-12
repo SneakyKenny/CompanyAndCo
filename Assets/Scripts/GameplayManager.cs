@@ -72,13 +72,13 @@ public class GameplayManager : MonoBehaviour
 							attackId = this.UnitSelected.UseFirstAbility (SelectedTile);
 							break;
 						case 2:
-							attackId = this.UnitSelected.UseSecondAbility (SelectedTile);
+							attackId = this.UnitSelected.UseFirstAbility (SelectedTile);
 							break;
 						case 3:
-							attackId = this.UnitSelected.UseThirdAbility (SelectedTile);
+							attackId = this.UnitSelected.UseFirstAbility (SelectedTile);
 							break;
 						case 4:
-							attackId = this.UnitSelected.UseSpecialAbility (SelectedTile);
+							attackId = this.UnitSelected.UseFirstAbility (SelectedTile);
 							break;
 						case 5:
 							// TODO: Objects

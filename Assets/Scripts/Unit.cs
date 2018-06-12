@@ -31,38 +31,76 @@ public class Unit : MonoBehaviour
 		this.abilities.Add ( ability );
 	}
 
-	public int Attack (Tile t)
+	public int Attack (Tile tile)
 	{
-		Debug.Log ( "Attack." );
+		//Debug.Log ( "Attack." );
+		int tileIndex = BoardGenerator.CoordToIndex ( tile.x, tile.y);
 
+		if(tileIndex >= 0 && tileIndex < BoardGenerator.tiles.Count)
+			if ( BoardGenerator.tiles [tileIndex].GetComponent <Renderer> ().material.color != Color.red )
+				return 0;
+		if (tile.Unit != null)
+		{
+			Debug.Log(tile.Unit.currentHP);
+			tile.Unit.currentHP -= (GameplayManager.Instance.UnitSelected.attack - tile.Unit.defense) < 0? 1 : (GameplayManager.Instance.UnitSelected.attack - tile.Unit.defense);
+			Debug.Log(tile.Unit.currentHP);
+			if (tile.Unit.currentHP <= 0)
+			{
+				if (TurnManager.Instance.Team1.Contains(tile.Unit))
+					TurnManager.Instance.Team1.Remove(tile.Unit);
+				else TurnManager.Instance.Team2.Remove(tile.Unit);
+				TurnManager.Instance.turnOrder.Remove(tile.Unit);
+				tile.Unit.transform.localScale.Set(1, 0.25f, 1);
+			}
+			return 1;
+		}
 		return 1;
 	}
 
-	public int UseFirstAbility (Tile t)
+	public int UseFirstAbility (Tile tile)
 	{
 		Debug.Log ( "UseFirstAbility." );
+		int tileIndex = BoardGenerator.CoordToIndex ( tile.x, tile.y);
 
+		if(tileIndex >= 0 && tileIndex < BoardGenerator.tiles.Count)
+			if ( BoardGenerator.tiles [tileIndex].GetComponent <Renderer> ().material.color != Color.red )
+				return 0;
+		if (tile.Unit != null)
+		{
+			Debug.Log(tile.Unit.currentHP);
+			tile.Unit.currentHP -= (GameplayManager.Instance.UnitSelected.attackMental - tile.Unit.defenseMental) < 0? 1 : (GameplayManager.Instance.UnitSelected.attackMental - tile.Unit.defenseMental);
+			Debug.Log(tile.Unit.currentHP);
+			if (tile.Unit.currentHP <= 0)
+			{
+				if (TurnManager.Instance.Team1.Contains(tile.Unit))
+					TurnManager.Instance.Team1.Remove(tile.Unit);
+				else TurnManager.Instance.Team2.Remove(tile.Unit);
+				TurnManager.Instance.turnOrder.Remove(tile.Unit);
+				tile.Unit.transform.localScale.Set(1, 0.25f, 1);
+			}
+			return 1;
+		}
 		return 1;
 	}
 
-	public int UseSecondAbility (Tile t)
+	public int UseSecondAbility ()
 	{
 		Debug.Log ( "UseSecondAbility." );
 
 		return 1;
 	}
 
-	public int UseThirdAbility (Tile t)
+	public int UseThirdAbility ()
 	{
 		Debug.Log ( "UseThirdAbility." );
 
 		return 1;
 	}
 
-	public int UseSpecialAbility (Tile t)
+	public int UseSpecialAbility (Tile tile)
 	{
 		Debug.Log ( "UseSpecialAbility." );
-
+		SpecialAbility.effect.ApplyEffect(tile);
 		return 1;
 	}
 	
@@ -86,27 +124,19 @@ public class Unit : MonoBehaviour
 
 				int tileIndex = BoardGenerator.CoordToIndex ( this.CurrentTile.x + dx, this.CurrentTile.y + dy );
 
-				if ( tileIndex >= 0 && tileIndex < BoardGenerator.tiles.Count )
-				{
-					if ( Mathf.Abs ( dx ) + Mathf.Abs ( dy ) <= this.range )
-					{
-						Debug.Log ( "Destination Position Set." );
-						this.destinationPosition = destinationTile.transform.position + new Vector3 ( 0, destinationTile.vertOffset / 2, 0 );
-					} else
-					{
-						if ( BoardGenerator.tiles [tileIndex].GetComponent <Renderer> ().material.color != Color.cyan )
-							return false;
-					}
-				}
+				if(tileIndex >= 0 && tileIndex < BoardGenerator.tiles.Count)
+					if ( BoardGenerator.tiles [tileIndex].GetComponent <Renderer> ().material.color != Color.cyan )
+						return false;
 			}
-			else
+
+			if ( isGameInit )
 				transform.position = destinationTile.transform.position + new Vector3 ( 0, destinationTile.vertOffset / 2, 0 );
+			else
+				this.destinationPosition = destinationTile.transform.position + new Vector3 ( 0, destinationTile.vertOffset / 2, 0 );
 
 			this.CurrentTile = destinationTile;
 
 			this.CurrentTile.Unit = this;
-
-			GameplayManager.ResetBoardTilesColor ();
 			
 			return true;
 		} catch ( Exception )
@@ -124,13 +154,45 @@ public class Unit : MonoBehaviour
 				if ( Mathf.Abs ( i ) + Mathf.Abs ( j ) <= range )
 				{
 					int tileIndex = BoardGenerator.CoordToIndex ( this.CurrentTile.x + i, this.CurrentTile.y + j );
-					if ( tileIndex >= 0 && tileIndex < BoardGenerator.tiles.Count )
+					if ( tileIndex >= 0 && tileIndex < BoardGenerator.tiles.Count)
 						BoardGenerator.tiles [tileIndex].gameObject.GetComponent <Renderer> ().material.color = Color.cyan;
 				}
 			}
 		}
 	}
 
+	public void ShowAttackRange(bool phys)
+	{
+		for ( int i = -this.abilities[phys?0:1].range ; i <= this.abilities[phys?0:1].range ; i++ )
+		{
+			for ( int j = -this.abilities[phys?0:1].range ; j <= this.abilities[phys?0:1].range; j++ )
+			{
+				if ( Mathf.Abs(i) + Mathf.Abs(j) <= this.abilities[phys?0:1].range )
+				{
+					int tileIndex = BoardGenerator.CoordToIndex ( this.CurrentTile.x + i, this.CurrentTile.y + j );
+					if ( tileIndex >= 0 && tileIndex < BoardGenerator.tiles.Count )
+						BoardGenerator.tiles [tileIndex].gameObject.GetComponent<Renderer> ().material.color = Color.red;
+				}
+			}
+		}
+	}
+
+	public void ShowAbilityRange()
+	{
+		for ( int i = -SpecialAbility.range ; i <= SpecialAbility.range ; i++ )
+		{
+			for ( int j = -SpecialAbility.range ; j <= SpecialAbility.range; j++ )
+			{
+				if ( Mathf.Abs(i) + Mathf.Abs(j) <= SpecialAbility.range )
+				{
+					int tileIndex = BoardGenerator.CoordToIndex ( this.CurrentTile.x + i, this.CurrentTile.y + j );
+					if ( tileIndex >= 0 && tileIndex < BoardGenerator.tiles.Count )
+						BoardGenerator.tiles [tileIndex].gameObject.GetComponent<Renderer> ().material.color = Color.green;
+				}
+			}
+		}
+	}
+	
 	void Update ()
 	{
 		if ( ( this.destinationPosition - transform.position ).magnitude > .05f )

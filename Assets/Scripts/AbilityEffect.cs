@@ -2,16 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AbilityEffect : MonoBehaviour {
+public abstract class AbilityEffect
+{
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public AbilityEffect()
+    {
+        
+    }
+    
+    public abstract void ApplyEffect(Tile tile);
 
 }
