@@ -67,9 +67,10 @@ public class Spawn_Control : MonoBehaviour
                     }
                 }
             }
-            chara.abilities.Add(new Ability(Ability.AbilityType.PHYS, "Regular strike", 1, chara.range, chara.attack));
+
+            chara.AddAbility ( new Ability ( Ability.AbilityType.PHYS, "Regular strike", 1, chara.range, chara.attack ) );
             //chara.abilities.Add(new Ability((Ability.AbilityType.PHYS, "Poweful strike", 3, chara.attack / 3)));
-            chara.abilities.Add(new Ability(Ability.AbilityType.MEN, "Regular insult", 1, 1, chara.attackMental));
+            chara.AddAbility ( new Ability ( Ability.AbilityType.MEN, "Regular insult", 1, 1, chara.attackMental ) );
             //chara.abilities.Add(new Ability((Ability.AbilityType.PHYS, "Poweful strike", 3, chara.attack / 3)));
             switch (chara.c)
             {
@@ -114,18 +115,24 @@ public class Spawn_Control : MonoBehaviour
         {
             if (c != null)
             {
+<<<<<<< HEAD
                 c.MoveTo(BoardGenerator.tiles[Random.Range(0, BoardGenerator.tiles.Count)]);
+=======
+                c.GetComponent<Unit>().MoveTo(BoardGenerator.tiles[Random.Range(0, BoardGenerator.tiles.Count)], true);
+>>>>>>> 9d5ae4b0d25f2f707db171e729c692b92aae122f
             }
-            //c.transform.position = new Vector3 ( Random.Range ( 0, 50 ), 1.5f, 1 );
         }
 
         foreach (Unit c in Team2)
         {
             if (c != null)
             {
+<<<<<<< HEAD
                 c.MoveTo(BoardGenerator.tiles[Random.Range(0, BoardGenerator.tiles.Count)]);
+=======
+                c.GetComponent<Unit>().MoveTo(BoardGenerator.tiles[Random.Range(0, BoardGenerator.tiles.Count)], true);
+>>>>>>> 9d5ae4b0d25f2f707db171e729c692b92aae122f
             }
-            //c.transform.position = new Vector3(Random.Range ( 0, 50), 1.5f, 50);
         }
     }
 

@@ -98,6 +98,9 @@ public class GameplayManager : MonoBehaviour
 		
 		this.MoveButton.interactable = this.UnitCanMove;
 		this.AttackButton.interactable = this.UnitCanAttack;
+
+		if ( this.UnitSelected != null && Camera.main != null )
+			Camera.main.transform.position = Vector3.Lerp ( Camera.main.transform.position, this.UnitSelected.transform.position + new Vector3 ( 5, 7.5f, -5 ) * 1.3f, 3 * Time.deltaTime );
 	}
 
 	public void EndTurn ()
@@ -112,6 +115,8 @@ public class GameplayManager : MonoBehaviour
 	{
 		ShowWhatToDoMenu ();
 
+		ResetBoardTilesColor ();
+
 		this.UnitCanMove = true;
 		this.UnitCanAttack = true;
 
@@ -119,6 +124,14 @@ public class GameplayManager : MonoBehaviour
 		isLookingForAttackTile = false;
 	}
 
+	void ResetBoardTilesColor ()
+	{
+		foreach ( Tile t in BoardGenerator.tiles )
+		{
+			t.GetComponent <Renderer> ().material.color = Color.white;
+		}
+	}
+	
 	Tile SelectTile ()
 	{
 		Ray ray = Camera.main.ScreenPointToRay ( Input.mousePosition );
@@ -156,13 +169,16 @@ public class GameplayManager : MonoBehaviour
 	{
 		EndTurn ();
 	}
-	
+
 	public void MOVEBUTTON ()
 	{
 		if ( this.UnitCanMove )
+		{
 			this.isLookingForDestinationTile = true;
+			UnitSelected.ShowTilesInMovementRange ();
+		}
 	}
-	
+
 	public void ACTIONBUTTON ()
 	{
 		if ( this.UnitCanAttack )

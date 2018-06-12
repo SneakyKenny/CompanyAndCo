@@ -16,9 +16,20 @@ public class TurnManager : MonoBehaviour
 	{
 		Instance = this;
 	}
+<<<<<<< HEAD
 	
 	void Start ()
 	{		
+=======
+
+	void Start ()
+	{
+		StartGame ();
+	}
+	
+	public void StartGame()
+	{
+>>>>>>> 9d5ae4b0d25f2f707db171e729c692b92aae122f
 		Team1 = Spawn_Control.Instance.Team1;
 		Team2 = Spawn_Control.Instance.Team2;
 		turnOrder = new List<Unit>();
@@ -55,6 +66,7 @@ public class TurnManager : MonoBehaviour
 		}
 		NextTurn();
 	}
+<<<<<<< HEAD
 
 	/*public void SendAction(string message)
 	{
@@ -75,9 +87,11 @@ public class TurnManager : MonoBehaviour
 	}*/
 	
 	public void NextTurn(string message = "")
+=======
+	
+	public void NextTurn()
+>>>>>>> 9d5ae4b0d25f2f707db171e729c692b92aae122f
 	{
-		/*if(message != "")
-			SendAction(message);*/
 		currentUnit++;
 		if (Team1.Contains(turnOrder[currentUnit % turnOrder.Count]))
 			GameplayManager.Instance.UnitSelected = turnOrder[currentUnit % turnOrder.Count];

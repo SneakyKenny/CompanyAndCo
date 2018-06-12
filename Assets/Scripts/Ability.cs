@@ -12,7 +12,7 @@ public class Ability
     };
 	public string AbilityName;
 	public int AbilityBaseDamage;
-    public AbilityEffet effect;
+    //public AbilityEffet effect;
     private int Area, range;
     private AbilityType type;
 

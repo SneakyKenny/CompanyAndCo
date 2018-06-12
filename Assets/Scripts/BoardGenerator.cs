@@ -61,7 +61,7 @@ public class BoardGenerator : MonoBehaviour
 
 	public static int CoordToIndex (int x, int y)
 	{
-		return x + y * BoardWidth;
+		return y + x * BoardHeight;
 	}
 
 	public static int[] IndexToCoord ( int index )
