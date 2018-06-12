@@ -33,6 +33,8 @@ public class TurnManager : MonoBehaviour
 		{
 			if (c != null)
 			{
+				c.Team = 0;
+				
 				int i = 0;
 				int j = 0;
 				while (i < j && c.speed < turnOrder[i].speed)
@@ -50,6 +52,8 @@ public class TurnManager : MonoBehaviour
 		{
 			if (c != null)
 			{
+				c.Team = 1;
+				
 				int i = 0;
 				int j = turnOrder.Count;
 				while (i < j && c.speed < turnOrder[i].speed)

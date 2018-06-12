@@ -6,6 +6,8 @@ public class Unit : MonoBehaviour
 {
 	public int lvl, hpMax, currentHP, attack, attackMental, defense, defenseMental, speed, stun, range;
 	public string c;
+
+	public int Team;
 	
 	public List <Ability> abilities;
 	public Ability SpecialAbility;

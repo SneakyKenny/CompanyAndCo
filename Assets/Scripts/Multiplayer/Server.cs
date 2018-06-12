@@ -103,7 +103,7 @@ public class Server : MonoBehaviour
 			case "CWHO":
 				c.ClientName = aData [1];
 				
-				Broadcast ( "SCON|" + c.ClientName, this.clients );
+				Broadcast ( "SCON|" + c.ClientName + "|" + this.clients.Count, this.clients );
 				break;
 			case "CACTION":
 				string returnData = "SACTION";

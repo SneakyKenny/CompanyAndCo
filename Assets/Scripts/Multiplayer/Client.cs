@@ -11,8 +11,8 @@ public class Client : MonoBehaviour
 	
 	[NonSerialized]
 	public bool IsHost;
-	
-	private List <GameClient> players;
+
+	public int team;
 	
 	private bool isSocketReady;
 	public TcpClient socket;
@@ -22,8 +22,6 @@ public class Client : MonoBehaviour
 
 	void Start ()
 	{
-		players = new List <GameClient> ();
-		
 		DontDestroyOnLoad ( gameObject );
 
 		//MainController = GameObject.Find ( "MainController" ).GetComponent <Main_Controller> ();
@@ -59,25 +57,15 @@ public class Client : MonoBehaviour
 		switch ( aData [0] )
 		{
 			case "SWHO":
-				for(int i = 1; i < aData.Length; i++)
-				{
-					UserConnected ( aData[i], false );
-				}
-				
 				Send ( "CWHO|" + this.ClientName + "|" + ( this.IsHost ? 1 : 0 ) );
 				break;
-			case "SCON":
-				UserConnected ( aData [1], IsHost );
+			case "SCON":this.team = int.Parse ( aData [2] );
 				break;
 			case "SSTART":
 				StartTheGame ();
 				break;
 			case "SACTION":
 				ParseSACTION ( aData );
-				break;
-			case "SYOU": //TODO
-				break;
-			case "SOTHER":
 				break;
 		}
 	}
@@ -95,8 +83,6 @@ public class Client : MonoBehaviour
 		int y3 = int.Parse ( data [7] );
 		
 		int actionId = int.Parse ( data [8] );
-		
-		//TODO: itemId ?
 		
 		Unit unit = BoardGenerator.GetUnitAtCoord ( x1, y1 );
 		Tile destinationTile = BoardGenerator.tiles [BoardGenerator.CoordToIndex ( x2, y2 )];
@@ -136,6 +122,7 @@ public class Client : MonoBehaviour
 		
 		TurnManager.Instance.NextTurn ();
 		
+		GameplayManager.Instance.StartTurn ();
 	}
 
 	private void StartTheGame ()
@@ -153,22 +140,7 @@ public class Client : MonoBehaviour
 		this.writer.WriteLine ( data );
 		this.writer.Flush ();
 	}
-
-	private void UserConnected ( string userName, bool isHost )
-	{
-		if ( userName != "" )
-		{
-			GameClient c = new GameClient ();
-
-			c.name = userName;
-
-			this.players.Add ( c );
-			
-			Debug.Log ( "Client: UserConnected: " + c.name );
-
-		}
-	}
-
+	
 	void Update ()
 	{
 
@@ -206,20 +178,4 @@ public class Client : MonoBehaviour
 		this.isSocketReady = false;
 	}
 
-}
-
-public class GameClient
-{
-
-	public string name;
-	public bool isHost;
-	
-	/*
-	/// <Summary>  ///
-	/// TODO?
-	/// Insert all the variables we need for our player in here.
-	/// a.k.a: Player 1 or 2 ? (Defense / Attack)
-	/// </Summary> ///
-	*/
-	
 }

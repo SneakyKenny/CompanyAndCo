@@ -27,12 +27,17 @@ public class GameplayManager : MonoBehaviour
 
 	private Client client;
 
+	public int Team;
+
 	void Awake ()
 	{
 		Instance = this;
 
 
+		
 		client = FindObjectOfType <Client> ();
+		Team = this.client.team;
+		
 		
 		
 		StartTurn ();
@@ -161,6 +166,11 @@ public class GameplayManager : MonoBehaviour
 		yield return new WaitForSeconds ( 1 );
 
 		CACTION = "CACTION|" + this.UnitSelected.CurrentTile.x + "|" + this.UnitSelected.CurrentTile.y + "|";
+		
+		if ( this.Team == this.UnitSelected.Team )
+			ShowWhatToDoMenu ();
+		else
+			DontShowAnything ();
 	}
 	
 	public void StartTurn ()
@@ -168,9 +178,14 @@ public class GameplayManager : MonoBehaviour
 		if ( UnitSelected == null )
 			StartCoroutine ( WaitforThingNotToBeNull () );
 		else
+		{
 			CACTION = "CACTION|" + this.UnitSelected.CurrentTile.x + "|" + this.UnitSelected.CurrentTile.y + "|";
-		
-		ShowWhatToDoMenu ();
+
+			if ( this.Team == this.UnitSelected.Team )
+				ShowWhatToDoMenu ();
+			else
+				DontShowAnything ();
+		}
 
 		AttackedTile = null;
 		
@@ -338,6 +353,13 @@ public class GameplayManager : MonoBehaviour
 	{
 		this.SpecialAttackCanvas.SetActive ( true );
 
+		this.WhatToDoCanvas.SetActive ( false );
+		this.ActionCanvas.SetActive ( false );
+	}
+
+	private void DontShowAnything ()
+	{
+		this.SpecialAttackCanvas.SetActive ( false );
 		this.WhatToDoCanvas.SetActive ( false );
 		this.ActionCanvas.SetActive ( false );
 	}
