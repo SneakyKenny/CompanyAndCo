@@ -115,11 +115,8 @@ public class Spawn_Control : MonoBehaviour
         {
             if (c != null)
             {
-<<<<<<< HEAD
                 c.MoveTo(BoardGenerator.tiles[Random.Range(0, BoardGenerator.tiles.Count)]);
-=======
                 c.GetComponent<Unit>().MoveTo(BoardGenerator.tiles[Random.Range(0, BoardGenerator.tiles.Count)], true);
->>>>>>> 9d5ae4b0d25f2f707db171e729c692b92aae122f
             }
         }
 
@@ -127,11 +124,8 @@ public class Spawn_Control : MonoBehaviour
         {
             if (c != null)
             {
-<<<<<<< HEAD
                 c.MoveTo(BoardGenerator.tiles[Random.Range(0, BoardGenerator.tiles.Count)]);
-=======
                 c.GetComponent<Unit>().MoveTo(BoardGenerator.tiles[Random.Range(0, BoardGenerator.tiles.Count)], true);
->>>>>>> 9d5ae4b0d25f2f707db171e729c692b92aae122f
             }
         }
     }

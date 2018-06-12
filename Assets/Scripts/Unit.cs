@@ -100,6 +100,8 @@ public class Unit : MonoBehaviour
 
 			this.CurrentTile.Unit = this;
 
+			GameplayManager.ResetBoardTilesColor ();
+			
 			return true;
 		} catch ( Exception )
 		{

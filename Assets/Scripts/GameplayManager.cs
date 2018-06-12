@@ -124,7 +124,7 @@ public class GameplayManager : MonoBehaviour
 		isLookingForAttackTile = false;
 	}
 
-	void ResetBoardTilesColor ()
+	public static void ResetBoardTilesColor ()
 	{
 		foreach ( Tile t in BoardGenerator.tiles )
 		{
