@@ -110,20 +110,20 @@ public class Spawn_Control : MonoBehaviour
         ParseTeam(Team1,true);
         ParseTeam(Team2,false);
 
-        foreach (GameObject c in Team1)
+        foreach (Unit c in Team1)
         {
             if (c != null)
             {
-                c.GetComponent<Unit>().MoveTo(BoardGenerator.tiles[Random.Range(0, BoardGenerator.tiles.Count)]);
+                c.MoveTo(BoardGenerator.tiles[Random.Range(0, BoardGenerator.tiles.Count)]);
             }
             //c.transform.position = new Vector3 ( Random.Range ( 0, 50 ), 1.5f, 1 );
         }
 
-        foreach (GameObject c in Team2)
+        foreach (Unit c in Team2)
         {
             if (c != null)
             {
-                c.GetComponent<Unit>().MoveTo(BoardGenerator.tiles[Random.Range(0, BoardGenerator.tiles.Count)]);
+                c.MoveTo(BoardGenerator.tiles[Random.Range(0, BoardGenerator.tiles.Count)]);
             }
             //c.transform.position = new Vector3(Random.Range ( 0, 50), 1.5f, 50);
         }
